@@ -36,6 +36,43 @@ public class RBTree {
    private void insert(int key, Node n) {
       Node z = bstinsert(key, n);
       z.color = RED;
+    
+      //this is where we start fixing
+      while(z.parent.color == RED) {
+      
+         if(z.parent == z.parent.parent.left) {
+            Node uncle = z.parent.parent.right;
+            
+               if(uncle.color == RED) {
+                  z.parent.color = BLACK; 
+                  uncle.color = BLACK; 
+                  z.parent.parent.color = RED; 
+                  z = z.parent.parent; 
+               }
+               
+               else {
+               
+                  if(z == z.parent.right) {
+                     z = z.parent; 
+                     leftRotate(z); 
+                  }
+                  
+                  z.parent.color = BLACK; 
+                  z.parent.parent.color = RED; 
+               }
+            
+         }
+         
+         else {
+            uncle = z.parent.parent.left; 
+            
+            if(uncle.color = RED) {
+               //left off @ line 19 in pseudocode
+            }
+         } 
+         
+      }  
+    
    }
    
    private Node bstinsert(int key, Node n) {
@@ -59,20 +96,62 @@ public class RBTree {
       }
    }
    
-   //WRITE ME!!
-   public static void leftRotate(){
-      leftRotate(n); 
+   
+   public void leftRotate(Node z){
+      privateLeftRotate(z); 
    }
-   private static void leftRotate(Node n) {
-      //do stuff
+   //FIXME: use replace() for lines 5-10 in pseudocode
+   private void privateLeftRotate(Node n) {
+      Node parent = n; 
+      Node child = parent.right; 
+      parent.right = child.left; 
+      
+      if(child.left != nil) child.left.parent = parent;
+      child.parent = parent.parent; 
+      
+      if(parent.parent == nil) root = child; 
+      
+      else if(parent == parent.parent.left) parent.parent.left = child; 
+      
+      else parent.parent.right = child;
+      
+      child.left = parent; 
+      
+      parent.parent = child; 
+    
    }
    
-   //WRITE ME!!
-   public static void rightRotate() {
-      rightRotate(n); 
+   
+   public void rightRotate(Node z) {
+      privateRightRotate(z); 
    }
-   private static void rightRotate(Node n) {
-      //do stuff
+   //FIXME: use replace() for lines 5-10 in pseudocode
+   private void privateRightRotate(Node n) {
+      Node parent = n; 
+      Node child = parent.left; 
+      parent.left = child.right; 
+      
+      if(child.right != nil) child.right.parent = parent;
+      child.parent = parent.parent; 
+      
+      if(parent.parent == nil) root = child; 
+      
+      else if(parent == parent.parent.right) parent.parent.right = child; 
+      
+      else parent.parent.left = child;
+      
+      child.right = parent; 
+      
+      parent.parent = child; 
+   }
+   
+   //GET ME FROM BST
+   private void replace(Node n, Node child) {
+      Node parent = n.parent; 
+      child.parent = parent;
+      if(parent == nil) root = child; 
+      else if (parent.left == n) parent.left = child; 
+      else parent.right = child; 
    }
 
 
