@@ -32,7 +32,6 @@ public class RBTree {
       }
    }
    
-   //FINISH ME!!//
    private void insert(int key, Node n) {
       Node z = bstinsert(key, n);
       z.color = RED;
@@ -64,15 +63,27 @@ public class RBTree {
          }
          
          else {
-            uncle = z.parent.parent.left; 
+            Node uncle = z.parent.parent.left; 
             
             if(uncle.color = RED) {
-               //left off @ line 19 in pseudocode
+               z.parent.color = BLACK; 
+               uncle.color = BLACK; 
+               z.parent.parent.color = RED; 
+               z = z.parent.parent; 
+            }
+            else {
+               if(z == z.parent.left) {
+                  z = z.parent; 
+                  rightRotate(z); 
+               }
+               z.parent.color = BLACK; 
+               z.parent.parent.color = RED; 
+               leftRotate(z); 
             }
          } 
-         
-      }  
-    
+      } 
+      root.color = BLACK; 
+ 
    }
    
    private Node bstinsert(int key, Node n) {
@@ -100,20 +111,14 @@ public class RBTree {
    public void leftRotate(Node z){
       privateLeftRotate(z); 
    }
-   //FIXME: use replace() for lines 5-10 in pseudocode
    private void privateLeftRotate(Node n) {
       Node parent = n; 
       Node child = parent.right; 
       parent.right = child.left; 
       
       if(child.left != nil) child.left.parent = parent;
-      child.parent = parent.parent; 
       
-      if(parent.parent == nil) root = child; 
-      
-      else if(parent == parent.parent.left) parent.parent.left = child; 
-      
-      else parent.parent.right = child;
+      replace(parent, child); 
       
       child.left = parent; 
       
@@ -125,27 +130,21 @@ public class RBTree {
    public void rightRotate(Node z) {
       privateRightRotate(z); 
    }
-   //FIXME: use replace() for lines 5-10 in pseudocode
    private void privateRightRotate(Node n) {
       Node parent = n; 
       Node child = parent.left; 
       parent.left = child.right; 
       
       if(child.right != nil) child.right.parent = parent;
-      child.parent = parent.parent; 
-      
-      if(parent.parent == nil) root = child; 
-      
-      else if(parent == parent.parent.right) parent.parent.right = child; 
-      
-      else parent.parent.left = child;
+
+      replace(parent, child); 
       
       child.right = parent; 
       
       parent.parent = child; 
    }
    
-   //GET ME FROM BST
+   
    private void replace(Node n, Node child) {
       Node parent = n.parent; 
       child.parent = parent;
