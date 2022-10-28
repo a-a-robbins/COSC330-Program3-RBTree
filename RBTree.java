@@ -66,7 +66,7 @@ public class RBTree {
                   
                   z.parent.color = BLACK; 
                   z.parent.parent.color = RED;
-                  rightRotate(z);  
+                  rightRotate(z.parent.parent);  
                }
             
          }
@@ -74,7 +74,7 @@ public class RBTree {
          else {
             Node uncle = z.parent.parent.left; 
             
-            if(uncle.color = RED) {
+            if(uncle.color == RED) {
                z.parent.color = BLACK; 
                uncle.color = BLACK; 
                z.parent.parent.color = RED; 
@@ -87,7 +87,7 @@ public class RBTree {
                }
                z.parent.color = BLACK; 
                z.parent.parent.color = RED; 
-               leftRotate(z); 
+               leftRotate(z.parent.parent); 
             }
          } 
       } 
@@ -117,11 +117,8 @@ public class RBTree {
    }
    
    
-   public void leftRotate(Node z){
-      privateLeftRotate(z); 
-   }
-   private void privateLeftRotate(Node n) {
-      Node parent = n; 
+   private void leftRotate(Node parent){
+      
       Node child = parent.right; 
       parent.right = child.left; 
       
@@ -136,18 +133,11 @@ public class RBTree {
    }
    
    
-   public void rightRotate(Node z) {
-      privateRightRotate(z); 
-   }
-   private void privateRightRotate(Node n) {
-      Node parent = n; 
+   private void rightRotate(Node parent) {
+
       Node child = parent.left; 
       parent.left = child.right; 
       
-      System.out.println("child = " + child);
-      System.out.println( "parent = " + parent); 
-      System.out.println("child.right = " + child.right); 
-      System.out.println("child.right.parent = " + child.right.parent); 
       if(child.right != nil) child.right.parent = parent;
 
       replace(parent, child); 
@@ -174,19 +164,17 @@ public class RBTree {
       RBTree t = new RBTree();
       
       //sorted data
-      /*t.insert(26); 
+      t.insert(26); 
       t.insert(13); 
       t.insert(34); 
       t.insert(9); 
       t.insert(14);
       t.insert(30); 
-      t.insert(78); */
+      t.insert(78); 
       
       //random data
       for(int i = 0; i < 10; i++) {
-         int nextRand = rand.nextInt(100);
-         System.out.println("nextRand = " + nextRand); 
-         t.insert(nextRand);  
+         t.insert(rand.nextInt(100));  
       }
    }
 }
