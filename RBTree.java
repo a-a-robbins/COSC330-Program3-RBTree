@@ -1,3 +1,11 @@
+// RBTree insert and rotate
+// COSC 330 - Algorithms
+// Ashley Robbins & Trong Bao
+// Oct 28, 2022
+
+import java.util.Random; 
+
+
 public class RBTree {
    private static final boolean RED = true;
    private static final boolean BLACK = false;
@@ -136,6 +144,10 @@ public class RBTree {
       Node child = parent.left; 
       parent.left = child.right; 
       
+      System.out.println("child = " + child);
+      System.out.println( "parent = " + parent); 
+      System.out.println("child.right = " + child.right); 
+      System.out.println("child.right.parent = " + child.right.parent); 
       if(child.right != nil) child.right.parent = parent;
 
       replace(parent, child); 
@@ -157,12 +169,24 @@ public class RBTree {
 
    
    public static void main(String[] args) {
+      Random rand = new Random(); 
+      
       RBTree t = new RBTree();
-      t.insert(12);
-      t.insert(36);
-      t.insert(19);
-      t.insert(1);
-      t.insert(13);
-      t.insert(15);
+      
+      //sorted data
+      /*t.insert(26); 
+      t.insert(13); 
+      t.insert(34); 
+      t.insert(9); 
+      t.insert(14);
+      t.insert(30); 
+      t.insert(78); */
+      
+      //random data
+      for(int i = 0; i < 10; i++) {
+         int nextRand = rand.nextInt(100);
+         System.out.println("nextRand = " + nextRand); 
+         t.insert(nextRand);  
+      }
    }
 }
