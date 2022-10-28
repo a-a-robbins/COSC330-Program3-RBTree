@@ -57,7 +57,8 @@ public class RBTree {
                   }
                   
                   z.parent.color = BLACK; 
-                  z.parent.parent.color = RED; 
+                  z.parent.parent.color = RED;
+                  rightRotate(z);  
                }
             
          }
